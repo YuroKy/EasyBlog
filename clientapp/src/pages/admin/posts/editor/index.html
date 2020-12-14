@@ -1,0 +1,14 @@
+<div>
+  <b-card title="Редактор новин">
+    <b-form-group label="Заголовок" label-for="title">
+      <b-form-input v-model="post.title" placeholder="Заголовок" id="title"></b-form-input>
+    </b-form-group>
+    <b-form-group label="Теги" label-for="tag">
+      <multiselect :multiple="true" v-model="post.tags" label="name" track-by="name" :options="tags"></multiselect>
+    </b-form-group>
+    <b-form-group label="Вміст" label-for="content">
+      <vue-editor v-model="post.content"></vue-editor>
+    </b-form-group>
+    <b-button class="pull-right" variant="outline-dark" @click="createOrUpdate">{{buttonName}}</b-button>
+  </b-card>
+</div>
