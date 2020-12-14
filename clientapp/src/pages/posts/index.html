@@ -1,6 +1,17 @@
 <div>
   <b-row>
-    <b-col md="2"></b-col>
+    <b-col md="2">
+      <b-card class="mt-3">
+        <b-form-group label="Пошук" label-for="term">
+          <b-form-input v-model="term" placeholder="Що шукаєте ?" id="term"></b-form-input>
+        </b-form-group>
+        <b-form-group label="Теги" label-for="tag">
+          <multiselect :multiple="true" v-model="filterTags" label="name" track-by="name" :options="tags"></multiselect>
+        </b-form-group>
+        <b-button class="" variant="outline-dark" block @click="applyFilter">Застосувати фільтри</b-button>
+        <b-button class="" variant="outline-dark" block @click="resetFilter">Скинути фільтри</b-button>
+      </b-card>
+    </b-col>
     <b-col md="8">
       <div v-for="(post, index) in posts" :key="index">
         <b-card class="mt-3 mb-3">
