@@ -1,5 +1,3 @@
-import Moment from "moment";
-
 export default {
   data() {
     return {
@@ -8,6 +6,10 @@ export default {
         {
           key: 'id',
           label: 'Ідентифікатор',
+        },
+        {
+          key: 'username',
+          label: 'Логін',
         },
         {
           key: 'firstName',
@@ -22,16 +24,10 @@ export default {
           label: "Пошта",
         },
         {
-          key: 'registrationTime',
-          label: "Час реєстрації",
-          formatter: (value) => Moment(value).format("DD/MM/YYYY HH:mm")
-        },
-        {
           key: 'status',
           label: "Стан",
           formatter: (status) => status === 0 ? 'Активний' : 'Заблокований'
         },
-
         {
           key: 'Дії',
           label: 'Дії',

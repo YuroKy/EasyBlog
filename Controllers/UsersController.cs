@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using EasyBlog.Models;
 using EasyBlog.Persistence;
@@ -26,6 +28,7 @@ namespace EasyBlog.Controllers
             var users = await _context.Users
                 .Select(u => new UserDto
                 {
+                    Username = u.Username,
                     Id = u.Id,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
@@ -46,6 +49,7 @@ namespace EasyBlog.Controllers
             var user = await _context.Users
                 .Select(u => new UserDto
                 {
+                    Username = u.Username,
                     Id = u.Id,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
@@ -77,11 +81,8 @@ namespace EasyBlog.Controllers
             userEntity.FirstName = user.FirstName;
             userEntity.LastName = user.LastName;
             userEntity.Email = user.Email;
+            userEntity.Username = user.Username;
 
-            if (!string.IsNullOrEmpty(user.Password))
-            {
-                userEntity.Password = user.Password;
-            }
 
             _context.Users.Update(userEntity);
             await _context.SaveChangesAsync();
@@ -92,12 +93,16 @@ namespace EasyBlog.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserCreateUpdateDto user)
         {
+            var (passwordHash, passwordSalt) = GetHashedPassword(user.Password);
+
             await _context.Users.AddAsync(new User
             {
+                Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 RegistrationTime = DateTime.Now,
-                Password = user.Password,
+                Password = passwordHash,
+                Salt = passwordSalt,
                 Email = user.Email,
                 Status = UserStatus.Active,
             });
@@ -110,8 +115,10 @@ namespace EasyBlog.Controllers
         public async Task<IActionResult> ChangePassword(Guid id, [FromBody] UserChangePasswordDto user)
         {
             var userEntity = await _context.Users.FirstOrDefaultAsync(t => t.Id == id);
-            userEntity.Password = user.Password;
+            var (passwordHash, passwordSalt) = GetHashedPassword(user.Password);
 
+            userEntity.Password = passwordHash;
+            userEntity.Salt = passwordSalt;
 
             _context.Users.Update(userEntity);
             await _context.SaveChangesAsync();
@@ -141,6 +148,15 @@ namespace EasyBlog.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private (byte[], byte[]) GetHashedPassword(string password)
+        {
+            using (var hmac = new HMACSHA512())
+            {
+                var (passwordHash, passwordSalt) = (hmac.ComputeHash(Encoding.UTF8.GetBytes(password)), hmac.Key);
+                return (passwordHash, passwordSalt);
+            }
         }
     }
 }

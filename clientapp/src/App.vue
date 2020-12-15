@@ -29,12 +29,12 @@ export default {
 
 <style>
 #app {
-  background-color: #faf0e6;
+  background: linear-gradient(to right, #b92b27, #1565c0);
   height: 100%;
 }
 
 .bg-color {
-  background-color: #faf0e6;
+  background: linear-gradient(to right, #b92b27, #1565c0);
 }
 
 .cursor-pointer {

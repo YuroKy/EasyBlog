@@ -2,6 +2,9 @@
   <b-card title="Редактор Користувачів">
     <b-row>
       <b-col md="4">
+        <b-form-group label="Логін" label-for="username">
+          <b-form-input v-model="user.username" placeholder="Логін" id="username"></b-form-input>
+        </b-form-group>
         <b-form-group label="Ім'я" label-for="firstName">
           <b-form-input v-model="user.firstName" placeholder="Ім'я" id="firstName"></b-form-input>
         </b-form-group>

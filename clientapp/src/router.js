@@ -49,6 +49,11 @@ const routes = [
         name: 'user-password-changer',
         component: () => import("./pages/admin/users/password-changer/index.vue"),
       },
+      {
+        path: "/admin/sign-in",
+        name: "sign-in",
+        component: () => import("./pages/admin/sign-in/index.vue"),
+      },
     ],
   },
   {

@@ -1,15 +1,18 @@
-<div class="container-fluid">
-  <b-row class="mt-3">
-    <b-col md="3">
-      <b-list-group>
-        <b-list-group-item :active="isActive('/admin/posts')" to="/admin/posts">Новини</b-list-group-item>
-        <b-list-group-item :active="isActive('/admin/tags')" to="/admin/tags">Теги</b-list-group-item>
-        <b-list-group-item :active="isActive('/admin/users')" to="/admin/users">Користувачі</b-list-group-item>
-      </b-list-group>
-    </b-col>
-    <b-col md="8">
-      <router-view></router-view>
-    </b-col>
-    <b-col md="1"></b-col>
-  </b-row>
+<div>
+  <div v-if="isAuthorized" class="container-fluid">
+    <b-row class="mt-3">
+      <b-col md="3">
+        <b-list-group>
+          <b-list-group-item :active="isActive('/admin/posts')" to="/admin/posts">Новини</b-list-group-item>
+          <b-list-group-item :active="isActive('/admin/tags')" to="/admin/tags">Теги</b-list-group-item>
+          <b-list-group-item :active="isActive('/admin/users')" to="/admin/users">Користувачі</b-list-group-item>
+        </b-list-group>
+      </b-col>
+      <b-col md="8">
+        <router-view></router-view>
+      </b-col>
+      <b-col md="1"></b-col>
+    </b-row>
+  </div>
+  <router-view v-else></router-view>
 </div>

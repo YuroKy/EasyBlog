@@ -7,6 +7,7 @@ export default {
   data() {
     return {
       user: {
+        username: null,
         firstName: null,
         lastName: null,
         email: null,

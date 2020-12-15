@@ -1,7 +1,7 @@
 <div>
   <b-card class="w-100">
     <b-button variant="primary" class="mb-2" @click="create"><i class="fa fa-plus"></i> Створити користувача</b-button>
-    <b-table striped outlined hover :items="users" :fields="fields">
+    <b-table responsive striped outlined hover :items="users" :fields="fields">
       <template #cell(Дії)="data">
         <i class="fas fa-pen mr-3" @click="edit(data.item)"></i>
         <i class="fa fa-key mr-3" @click="changePassword(data.item)"></i>

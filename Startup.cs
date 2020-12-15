@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using EasyBlog.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using VueCliMiddleware;
 
 namespace EasyBlog
@@ -41,6 +44,21 @@ namespace EasyBlog
                 options.UseSnakeCaseNamingConvention();
                 options.EnableSensitiveDataLogging();
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = "EasyBlogServer",
+                        ValidateAudience = true,
+                        ValidAudience = "EasyBlogClient",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("MySuperSecret_SecretKey!123")),
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +71,7 @@ namespace EasyBlog
 
             app.UseRouting();
             app.UseSpaStaticFiles();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwagger();
 
