@@ -1,0 +1,12 @@
+<div>
+  <b-card title="Менеджер паролів">
+    <b-row>
+      <b-col md="4">
+        <b-form-group label="Пароль" label-for="password">
+          <b-form-input v-model="user.password" placeholder="Пароль" id="password"></b-form-input>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-button class="pull-right" variant="outline-dark" @click="changePassword">Змінити пароль</b-button>
+  </b-card>
+</div>

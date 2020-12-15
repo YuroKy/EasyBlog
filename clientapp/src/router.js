@@ -34,6 +34,21 @@ const routes = [
         name: 'tag-editor',
         component: () => import("./pages/admin/tags/editor/index.vue"),
       },
+      {
+        path: "/admin/users",
+        name: "admin-users",
+        component: () => import("./pages/admin/users/index.vue"),
+      },
+      {
+        path: "/admin/users/editor/:id",
+        name: 'user-editor',
+        component: () => import("./pages/admin/users/editor/index.vue"),
+      },
+      {
+        path: "/admin/users/password-changer/:id",
+        name: 'user-password-changer',
+        component: () => import("./pages/admin/users/password-changer/index.vue"),
+      },
     ],
   },
   {

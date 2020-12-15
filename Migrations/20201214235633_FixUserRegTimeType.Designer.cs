@@ -3,15 +3,17 @@ using System;
 using EasyBlog.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace EasyBlog.Migrations
 {
     [DbContext(typeof(BlogContext))]
-    partial class BlogContextModelSnapshot : ModelSnapshot
+    [Migration("20201214235633_FixUserRegTimeType")]
+    partial class FixUserRegTimeType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,10 +82,6 @@ namespace EasyBlog.Migrations
                         .HasColumnName("id")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Email")
-                        .HasColumnName("email")
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .HasColumnName("first_name")
                         .HasColumnType("text");
@@ -99,10 +97,6 @@ namespace EasyBlog.Migrations
                     b.Property<DateTime>("RegistrationTime")
                         .HasColumnName("registration_time")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Status")
-                        .HasColumnName("status")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id")
                         .HasName("pk_users");

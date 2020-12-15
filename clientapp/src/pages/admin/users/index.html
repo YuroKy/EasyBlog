@@ -1,0 +1,14 @@
+<div>
+  <b-card class="w-100">
+    <b-button variant="primary" class="mb-2" @click="create"><i class="fa fa-plus"></i> Створити користувача</b-button>
+    <b-table striped outlined hover :items="users" :fields="fields">
+      <template #cell(Дії)="data">
+        <i class="fas fa-pen mr-3" @click="edit(data.item)"></i>
+        <i class="fa fa-key mr-3" @click="changePassword(data.item)"></i>
+        <i v-if="data.item.status === 0" class="fa fa-lock mr-3" @click="changeUserStatus(data.item)"></i>
+        <i v-else class="fa fa-unlock mr-3" @click="changeUserStatus(data.item)"></i>
+        <i class="fas fa-trash" @click="remove(data.item)"></i>
+      </template>
+    </b-table>
+  </b-card>
+</div>
