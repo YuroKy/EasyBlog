@@ -27,17 +27,16 @@ export default {
     buttonName() {
       return this.$route.params.id ? "Оновити" : "Створити";
     },
-    cardTitleName() {
-      return this.$route.params.id ? "Редагувати пост" : "Новий пост";
-    },
   },
   methods: {
     createOrUpdate() {
       if (this.$route.params.id) {
         this.update();
+        this.$toast.success("Новина успішно оновлена!");
       }
       else {
         this.create();
+        this.$toast.success("Новина успішно створена!");
       }
     },
     create() {

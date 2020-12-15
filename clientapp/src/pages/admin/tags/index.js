@@ -26,6 +26,7 @@ export default {
     async remove(tag) {
       await this.axios.delete(`tags/${tag.id}`);
       this.tags = this.tags.filter(p => p.id != tag.id);
+      this.$toast.success("Тег успішно видалений!");
     },
     edit(tag) {
       this.$router.push({ name: 'tag-editor', params: { id: tag.id } });

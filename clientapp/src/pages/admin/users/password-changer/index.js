@@ -18,6 +18,7 @@ export default {
       this.axios
         .put(`users/change-password/${this.$route.params.id}`, this.user)
         .then(() => this.$router.push({ name: "admin-users" }));
+        this.$toast.success("Пароль користувача був успішно змінений!");
     },
   },
 };

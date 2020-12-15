@@ -43,6 +43,7 @@ export default {
     async remove(post) {
       await this.axios.delete(`posts/${post.id}`);
       this.posts = this.posts.filter(p => p.id != post.id);
+      this.$toast.success("Новина успішно видалена!");
     },
     edit(post) {
       console.log(post);

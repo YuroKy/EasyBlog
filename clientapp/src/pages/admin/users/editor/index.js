@@ -29,9 +29,11 @@ export default {
     createOrUpdate() {
       if (this.$route.params.id) {
         this.update();
+        this.$toast.success("Користувач успішно оновлений!");
       }
       else {
         this.create();
+        this.$toast.success("Користувач успішно створений!");
       }
     },
     create() {

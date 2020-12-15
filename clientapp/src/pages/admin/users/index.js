@@ -50,6 +50,7 @@ export default {
     async remove(user) {
       await this.axios.delete(`users/${user.id}`);
       this.users = this.users.filter(p => p.id != user.id);
+      this.$toast.success("Користувач успішно видалений!");
     },
     edit(user) {
       this.$router.push({ name: 'user-editor', params: { id: user.id } });
@@ -62,8 +63,11 @@ export default {
     },
     async changeUserStatus(user) {
       const action = user.status === 0 ? 'block' : 'unblock';
+      const resultMessage = user.status === 0 ? 'заблокований' : 'розблокований';
+
       await this.axios.put(`users/${action}/${user.id}`);
       await this.loadUsers();
+      this.$toast.success(`Користувач успішно ${resultMessage}!`);
     }
   },
 };
