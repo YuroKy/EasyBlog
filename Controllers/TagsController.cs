@@ -4,11 +4,13 @@ using System.Threading.Tasks;
 using EasyBlog.Models;
 using EasyBlog.Persistence;
 using EasyBlog.Persistence.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyBlog.Controllers
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class TagsController : ControllerBase
@@ -21,6 +23,7 @@ namespace EasyBlog.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             var tags = await _context.Tags

@@ -44,6 +44,9 @@ export default {
       this.term = null;
       this.filterTags = [];
       await this.loadPosts();
+    },
+    getAuthorAvatar(post) {
+      return `data:image/png;base64, ${post.authorAvatar}`;
     }
   },
 };

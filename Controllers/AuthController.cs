@@ -47,15 +47,18 @@ namespace EasyBlog.Controllers
                 }
             }
 
+            var now = DateTime.Now;
             var jwt = new JwtSecurityToken(
-                issuer: "EasyBlogServer",
-                audience: "EasyBlogClient",
-                notBefore: DateTime.Now,
+                issuer: AuthOptions.ISSUER,
+                audience: AuthOptions.AUDIENCE,
+                notBefore: now,
                 claims: new List<Claim>
                 {
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
                     new Claim("UserId", user.Id.ToString()),
                 },
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("MySuperSecret_SecretKey!123")), SecurityAlgorithms.HmacSha256));
+                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
+                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 

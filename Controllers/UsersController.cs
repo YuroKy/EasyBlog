@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using EasyBlog.Models;
 using EasyBlog.Persistence;
 using EasyBlog.Persistence.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace EasyBlog.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly BlogContext _context;

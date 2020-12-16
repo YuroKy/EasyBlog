@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using EasyBlog.Models;
 using EasyBlog.Persistence;
 using EasyBlog.Persistence.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +14,7 @@ namespace EasyBlog.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class PostsController : ControllerBase
     {
         private readonly BlogContext _context;
@@ -21,6 +24,7 @@ namespace EasyBlog.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -31,7 +35,8 @@ namespace EasyBlog.Controllers
                     Title = p.Title,
                     Content = p.Content,
                     CreatedTime = p.CreatedTime,
-                    AuthorName = p.AuthorName,
+                    AuthorName = p.Author.FullName,
+                    AuthorAvatar = p.Author.Avatar,
                     Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
                 })
                 .AsNoTracking()
@@ -44,7 +49,6 @@ namespace EasyBlog.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var post = await _context.Posts
-                .Include(p => p.Tags)
                 .Where(p => p.Id == id)
                 .Select(p => new PostDto
                 {
@@ -52,7 +56,8 @@ namespace EasyBlog.Controllers
                     Title = p.Title,
                     Content = p.Content,
                     CreatedTime = p.CreatedTime,
-                    AuthorName = p.AuthorName,
+                    AuthorName = p.Author.FullName,
+                    AuthorAvatar = p.Author.Avatar,
                     Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
                 })
                 .AsNoTracking()
@@ -102,13 +107,16 @@ namespace EasyBlog.Controllers
                 .Where(t => post.TagIds.Contains(t.Id))
                 .ToList();
 
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var userId = claimsIdentity?.Claims.First(c => c.Type == "UserId").Value;
+
             await _context.Posts.AddAsync(new Post
             {
-                AuthorName = "Yurii Fedelesh",
                 CreatedTime = DateTime.Now,
                 Content = post.Content,
                 Title = post.Title,
                 Tags = tags,
+                AuthorId = Guid.Parse(userId ?? string.Empty),
             });
             await _context.SaveChangesAsync();
 
