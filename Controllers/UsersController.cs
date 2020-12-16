@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +37,7 @@ namespace EasyBlog.Controllers
                     RegistrationTime = u.RegistrationTime,
                     Email = u.Email,
                     Status = u.Status,
+                    Avatar = u.Avatar,
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -56,6 +59,7 @@ namespace EasyBlog.Controllers
                     RegistrationTime = u.RegistrationTime,
                     Email = u.Email,
                     Status = u.Status,
+                    Avatar = u.Avatar,
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.Id == id);
@@ -75,7 +79,7 @@ namespace EasyBlog.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UserCreateUpdateDto user)
+        public async Task<IActionResult> Update(Guid id, [FromForm] UserCreateUpdateDto user)
         {
             var userEntity = await _context.Users.FirstOrDefaultAsync(t => t.Id == id);
             userEntity.FirstName = user.FirstName;
@@ -83,6 +87,15 @@ namespace EasyBlog.Controllers
             userEntity.Email = user.Email;
             userEntity.Username = user.Username;
 
+            if (user.Avatar != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await user.Avatar.CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    userEntity.Avatar = Convert.ToBase64String(fileBytes);
+                }
+            }
 
             _context.Users.Update(userEntity);
             await _context.SaveChangesAsync();
@@ -91,9 +104,20 @@ namespace EasyBlog.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] UserCreateUpdateDto user)
+        public async Task<IActionResult> Create([FromForm] UserCreateUpdateDto user)
         {
             var (passwordHash, passwordSalt) = GetHashedPassword(user.Password);
+            string avatar = null;
+
+            if (user.Avatar != null)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await user.Avatar.CopyToAsync(ms);
+                    var fileBytes = ms.ToArray();
+                    avatar = Convert.ToBase64String(fileBytes);
+                }
+            }
 
             await _context.Users.AddAsync(new User
             {
@@ -105,7 +129,9 @@ namespace EasyBlog.Controllers
                 Salt = passwordSalt,
                 Email = user.Email,
                 Status = UserStatus.Active,
+                Avatar = avatar,
             });
+
             await _context.SaveChangesAsync();
 
             return Ok();

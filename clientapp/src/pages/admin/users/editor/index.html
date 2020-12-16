@@ -2,17 +2,25 @@
   <b-card title="Редактор Користувачів">
     <b-row>
       <b-col md="4">
-        <b-form-group label="Логін" label-for="username">
-          <b-form-input v-model="user.username" placeholder="Логін" id="username"></b-form-input>
+
+        <b-form-group label="Аватар" label-for="avatar">
+          <b-img v-if="user.avatar" height="20px" thumbnail fluid :src="avatarPreview" id="avatar" alt="Avatar"></b-img>
+          <b-form-file class="mt-1" v-model="user.uploadedAvatar" ref="avatar" placeholder="Завантажити..."
+            drop-placeholder="Завантажити...""></b-form-file>
+        </b-form-group>
+
+
+        <b-form-group label=" Логін" label-for="username">
+            <b-form-input v-model="user.username" placeholder="Логін" id="username"></b-form-input>
         </b-form-group>
         <b-form-group label="Ім'я" label-for="firstName">
           <b-form-input v-model="user.firstName" placeholder="Ім'я" id="firstName"></b-form-input>
         </b-form-group>
         <b-form-group label="Фамілія" label-for="lastName">
-          <b-form-input v-model="user.lastName" placeholder="Фамілія"  id="lastName"></b-form-input>
+          <b-form-input v-model="user.lastName" placeholder="Фамілія" id="lastName"></b-form-input>
         </b-form-group>
         <b-form-group label="Електронна пошта" label-for="email">
-          <b-form-input v-model="user.email" placeholder="Електронна пошта"  id="email"></b-form-input>
+          <b-form-input v-model="user.email" placeholder="Електронна пошта" id="email"></b-form-input>
         </b-form-group>
         <b-form-group v-if="!$route.params.id" label="Пароль" label-for="password">
           <b-form-input v-model="user.password" placeholder="Пароль" id="password"></b-form-input>

@@ -7,6 +7,8 @@ export default {
   data() {
     return {
       user: {
+        avatar: null,
+        uploadedAvatar: null,
         username: null,
         firstName: null,
         lastName: null,
@@ -25,26 +27,38 @@ export default {
     buttonName() {
       return this.$route.params.id ? "Оновити" : "Створити";
     },
+    avatarPreview() {
+      return `data:image/png;base64, ${this.user.avatar}`;
+    }
   },
   methods: {
-    createOrUpdate() {
+    async createOrUpdate() {
+      const user = Object.assign({}, this.user);
+      let formData = new FormData();
+      formData.append('avatar', user.uploadedAvatar)
+      formData.append('username', user.username)
+      formData.append('firstName', user.firstName)
+      formData.append('lastName', user.lastName)
+      formData.append('email', user.email)
+      formData.append('password', user.password)
+
       if (this.$route.params.id) {
-        this.update();
+        this.update(formData);
         this.$toast.success("Користувач успішно оновлений!");
       }
       else {
-        this.create();
+        this.create(formData);
         this.$toast.success("Користувач успішно створений!");
       }
     },
-    create() {
+    create(user) {
       this.axios
-        .post('users', this.user)
+        .post('users', user)
         .then(() => this.$router.push({ name: "admin-users" }));
     },
-    update() {
+    update(user) {
       this.axios
-        .put(`users/${this.$route.params.id}`, this.user)
+        .put(`users/${this.$route.params.id}`, user)
         .then(() => this.$router.push({ name: "admin-users" }));
     }
   },

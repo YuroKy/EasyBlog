@@ -1,4 +1,6 @@
-﻿namespace EasyBlog.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace EasyBlog.Models
 {
     public class UserCreateUpdateDto
     {
@@ -7,6 +9,6 @@
         public string LastName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
+        public IFormFile Avatar { get; set; }
     }
 }

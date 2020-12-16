@@ -10,6 +10,7 @@ namespace EasyBlog.Persistence.Entities
         public string LastName { get; set; }
         public string Email { get; set; }
         public DateTime RegistrationTime { get; set; }
+        public string Avatar { get; set; }
 
         public byte[] Password { get; set; }
         public byte[] Salt { get; set; }
