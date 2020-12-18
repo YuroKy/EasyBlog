@@ -1,0 +1,24 @@
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+  max-height: calc(40vh - 2.5rem);
+  overflow: hidden;
+  box-shadow: -1px -1px 0px rgba(255, 255, 255, 0.45), 6px 6px 8px rgba(126, 126, 126, 0.1);
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  box-shadow: 0px -10px 25px 0px rgba(200, 200, 200, 0.75);
+}
+.card-footer p {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.media-body {
+  width: 100%;
+}

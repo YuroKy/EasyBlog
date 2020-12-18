@@ -1,0 +1,8 @@
+<div>
+  <b-card title="Редактор джерел">
+    <b-form-group label="Назва" label-for="name">
+      <b-form-input v-model="source.name" placeholder="Назва" id="name"></b-form-input>
+    </b-form-group>
+    <b-button class="pull-right" variant="outline-dark" @click="createOrUpdate">{{buttonName}}</b-button>
+  </b-card>
+</div>

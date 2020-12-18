@@ -5,8 +5,18 @@ Vue.use(Router);
 const routes = [
   {
     path: "/",
+    redirect: "/posts",
+    name: "root",
+  },
+  {
+    path: "/posts",
     component: () => import("./pages/posts/index.vue"),
     name: "posts",
+  },
+  {
+    path: "/posts/:id",
+    component: () => import("./pages/posts/details/index.vue"),
+    name: "post-details",
   },
   {
     path: "/admin",
@@ -53,6 +63,16 @@ const routes = [
         path: "/admin/sign-in",
         name: "sign-in",
         component: () => import("./pages/admin/sign-in/index.vue"),
+      },
+      {
+        path: "/admin/sources",
+        name: "admin-sources",
+        component: () => import("./pages/admin/sources/index.vue"),
+      },
+      {
+        path: "/admin/sources/editor/:id",
+        name: 'source-editor',
+        component: () => import("./pages/admin/sources/editor/index.vue"),
       },
     ],
   },

@@ -8,6 +8,7 @@ namespace EasyBlog.Persistence
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Source> Sources { get; set; }
 
         public BlogContext(DbContextOptions<BlogContext> options)
             : base(options)

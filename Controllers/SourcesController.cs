@@ -10,13 +10,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyBlog.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TagsController : ControllerBase
+    public class SourcesController : ControllerBase
     {
         private readonly BlogContext _context;
 
-        public TagsController(BlogContext context)
+        public SourcesController(BlogContext context)
         {
             _context = context;
         }
@@ -25,8 +26,8 @@ namespace EasyBlog.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
-            var tags = await _context.Tags
-                .Select(t => new TagDto
+            var sources = await _context.Sources
+                .Select(t => new SourceDto
                 {
                     Id = t.Id,
                     Name = t.Name,
@@ -34,47 +35,47 @@ namespace EasyBlog.Controllers
                 .AsNoTracking()
                 .ToListAsync();
 
-            return Ok(tags);
+            return Ok(sources);
         }
 
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var tag = await _context.Tags
+            var source = await _context.Sources
                 .AsNoTracking()
                 .FirstOrDefaultAsync(t => t.Id == id);
 
-            return Ok(tag);
+            return Ok(source);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(Guid id)
         {
-            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            var source = await _context.Sources.FirstOrDefaultAsync(t => t.Id == id);
 
-            _context.Tags.Remove(tag);
+            _context.Sources.Remove(source);
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] TagDto tag)
+        public async Task<IActionResult> Update(Guid id, [FromBody] SourceDto sourceDto)
         {
-            var tagEntity = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
-            tagEntity.Name = tag.Name;
+            var sourceEntity = await _context.Sources.FirstOrDefaultAsync(t => t.Id == id);
+            sourceEntity.Name = sourceDto.Name;
 
-            _context.Tags.Update(tagEntity);
+            _context.Sources.Update(sourceEntity);
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TagDto tag)
+        public async Task<IActionResult> Create([FromBody] SourceDto source)
         {
-            await _context.Tags.AddAsync(new Tag { Name = tag.Name });
+            await _context.Sources.AddAsync(new Source { Name = source.Name });
             await _context.SaveChangesAsync();
 
             return Ok();

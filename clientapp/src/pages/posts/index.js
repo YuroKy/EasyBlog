@@ -47,6 +47,9 @@ export default {
     },
     getAuthorAvatar(post) {
       return `data:image/png;base64, ${post.authorAvatar}`;
+    },
+    getLink(post) {
+      return { name: 'post-details', params: { id: post.id } };
     }
   },
 };

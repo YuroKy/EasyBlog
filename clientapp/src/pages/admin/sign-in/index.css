@@ -6,11 +6,12 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  background: #191919;
-  ;
+  background: #ffffff;
   text-align: center;
   transition: 0.25s;
-  margin-top: 100px
+  border-radius: 8px;
+  margin-top: 100px;
+  box-shadow: -1px -1px 0px rgba(255, 255, 255, 0.45), 6px 6px 8px rgba(126, 126, 126, 0.1);
 }
 
 .box input[type="text"],
@@ -24,13 +25,13 @@
   padding: 10px 10px;
   width: 250px;
   outline: none;
-  color: white;
+  color: black;
   border-radius: 24px;
   transition: 0.25s
 }
 
 .box h1 {
-  color: white;
+  color: black;
   text-transform: uppercase;
   font-weight: 500
 }
@@ -47,17 +48,18 @@
   display: block;
   margin: 20px auto;
   text-align: center;
-  border: 2px solid #2ecc71;
+  border: 2px solid #3498db;
   padding: 14px 40px;
   outline: none;
-  color: white;
+  color: black;
   border-radius: 24px;
   transition: 0.25s;
   cursor: pointer
 }
 
 .box input[type="submit"]:hover {
-  background: #2ecc71
+  background: #3498db;
+  color: white;
 }
 
 .forgot {
@@ -91,12 +93,12 @@ ul.social-network li {
 .social-network a.icoFacebook:hover i,
 .social-network a.icoTwitter:hover i,
 .social-network a.icoGoogle:hover i {
-  color: #fff
+  color: rgb(0, 0, 0)
 }
 
 a.socialIcon:hover,
 .socialHoverClass {
-  color: #44BCDD
+  color: #000000
 }
 
 .social-circle li a {
@@ -123,7 +125,7 @@ a.socialIcon:hover,
 }
 
 .social-circle i {
-  color: #fff;
+  color: rgb(0, 0, 0);
   transition: all 0.8s;
   transition: all 0.8s
 }

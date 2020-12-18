@@ -1,0 +1,22 @@
+.card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 40px 2.25rem 2.25rem;
+  overflow: visible;
+  position: relative;
+  max-height: 100%;
+}
+
+.media-body {
+  width: 100%;
+}
+
+.avatar-box {
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  border-radius: 50em;
+  border: 2px solid white;
+  overflow: hidden;
+  transform: translateX(-50%);
+}

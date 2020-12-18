@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EasyBlog.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Authorize]
     public class PostsController : ControllerBase
     {
@@ -45,6 +45,7 @@ namespace EasyBlog.Controllers
             return Ok(posts);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {

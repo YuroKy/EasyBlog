@@ -14,7 +14,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyBlog.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class UsersController : ControllerBase

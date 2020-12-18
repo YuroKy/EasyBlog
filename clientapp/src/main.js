@@ -39,7 +39,7 @@ const store = new Vuex.Store({
 });
 
 
-Axios.defaults.baseURL = window.location.origin;
+Axios.defaults.baseURL = window.location.origin + "/api/";
 Axios.interceptors.request.use(function (config) {
   const token = store.getters.token;
   if (token) {
