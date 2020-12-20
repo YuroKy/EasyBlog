@@ -12,6 +12,9 @@ namespace EasyBlog.Persistence.Entities
         public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
 
 
+        public Guid? SourceId { get; set; }
+        public Source Source { get; set; }
+
         public Guid AuthorId { get; set; }
         public User Author { get; set; }
     }

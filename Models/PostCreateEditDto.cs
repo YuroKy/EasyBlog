@@ -10,5 +10,6 @@ namespace EasyBlog.Models
         public string Title { get; set; }
         public string Content { get; set; }
         public List<Guid> TagIds { get; set; }
+        public Guid SourceId { get; set; }
     }
 }

@@ -6,6 +6,12 @@
     <b-form-group label="Теги" label-for="tag">
       <multiselect :multiple="true" v-model="post.tags" label="name" track-by="name" :options="tags"></multiselect>
     </b-form-group>
+
+    <b-form-group label="Джерело" label-for="source">
+      <b-form-select v-model="post.source" :options="sources"></b-form-select>
+    </b-form-group>
+
+
     <b-form-group label="Вміст" label-for="content">
       <vue-editor v-model="post.content"></vue-editor>
     </b-form-group>

@@ -74,6 +74,11 @@ const routes = [
         name: 'source-editor',
         component: () => import("./pages/admin/sources/editor/index.vue"),
       },
+      {
+        path: "/admin/export",
+        name: "export",
+        component: () => import("./pages/admin/export/index.vue"),
+      },
     ],
   },
   {

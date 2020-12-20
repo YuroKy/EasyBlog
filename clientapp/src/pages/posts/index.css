@@ -4,7 +4,8 @@
   padding: 1.25rem;
   max-height: calc(40vh - 2.5rem);
   overflow: hidden;
-  box-shadow: -1px -1px 0px rgba(255, 255, 255, 0.45), 6px 6px 8px rgba(126, 126, 126, 0.1);
+  box-shadow: -1px -1px 0px rgba(255, 255, 255, 0.45),
+    6px 6px 8px rgba(126, 126, 126, 0.1);
 }
 
 .card-footer {
@@ -21,4 +22,14 @@
 
 .media-body {
   width: 100%;
+}
+
+.without-overflow {
+  word-wrap: break-word !important;
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+.filter-card-body {
+  max-height: none !important;
 }

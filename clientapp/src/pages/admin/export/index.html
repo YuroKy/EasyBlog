@@ -1,0 +1,12 @@
+<div>
+  <b-card title="Сформувати звіт по таблиці" class="w-100">
+    <b-row>
+      <b-col md="10">
+        <b-form-select v-model="entityName" :options="options"></b-form-select>
+      </b-col>
+      <b-col md="2">
+        <b-button variant="primary" @click="exportAsync">Сформувати звіт</b-button>
+      </b-col>
+    </b-row>
+  </b-card>
+</div>

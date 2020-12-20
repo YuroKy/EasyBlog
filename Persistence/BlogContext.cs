@@ -1,4 +1,5 @@
-﻿using EasyBlog.Persistence.Entities;
+﻿using System.Collections.Generic;
+using EasyBlog.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyBlog.Persistence

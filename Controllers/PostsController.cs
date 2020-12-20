@@ -38,6 +38,7 @@ namespace EasyBlog.Controllers
                     AuthorName = p.Author.FullName,
                     AuthorAvatar = p.Author.Avatar,
                     Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
+                    Source = p.Source != null ? new SourceDto { Id = p.Source.Id, Name = p.Source.Name } : new SourceDto(),
                 })
                 .AsNoTracking()
                 .ToListAsync();
@@ -60,6 +61,7 @@ namespace EasyBlog.Controllers
                     AuthorName = p.Author.FullName,
                     AuthorAvatar = p.Author.Avatar,
                     Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
+                    Source = p.Source != null ? new SourceDto { Id = p.Source.Id, Name = p.Source.Name } : new SourceDto(),
                 })
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
@@ -89,7 +91,9 @@ namespace EasyBlog.Controllers
 
             postEntity.Content = post.Content;
             postEntity.Title = post.Title;
+            postEntity.SourceId = post.SourceId;
             postEntity.Tags = new List<Tag>();
+
             _context.Posts.Update(postEntity);
             await _context.SaveChangesAsync();
 
@@ -118,6 +122,7 @@ namespace EasyBlog.Controllers
                 Title = post.Title,
                 Tags = tags,
                 AuthorId = Guid.Parse(userId ?? string.Empty),
+                SourceId = post.SourceId,
             });
             await _context.SaveChangesAsync();
 
