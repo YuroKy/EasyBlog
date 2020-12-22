@@ -67,7 +67,7 @@ namespace EasyBlog.Controllers
                             CreatedTime = p.CreatedTime,
                             AuthorName = p.Author.FullName,
                             AuthorAvatar = p.Author.Avatar,
-                            Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
+                            Tags = p.PostTags.Select(t => new TagDto { Id = t.TagId, Name = t.Tag.Name }).ToList(),
                             Source = p.Source != null ? new SourceDto { Id = p.Source.Id, Name = p.Source.Name } : new SourceDto(),
                         })
                         .ToList();

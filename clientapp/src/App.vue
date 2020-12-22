@@ -5,7 +5,12 @@
         <b-navbar-brand to="/">EasyBlog - Легше не придумаєш </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav> </b-collapse>
-        <b-navbar-nav> </b-navbar-nav>
+        <b-navbar-nav
+          v-show="isAuthorized"
+          class="float-right pull-right cursor-pointer"
+        >
+          <router-link to="/admin">Панель Адміністратора</router-link>
+        </b-navbar-nav>
       </b-navbar>
     </div>
     <div class="wrapper container-fluid bg-color">
@@ -18,9 +23,16 @@
 export default {
   name: "App",
   data() {
-    return {
-      test: "Yurii",
-    };
+    return {};
+  },
+  computed: {
+    isAuthorized() {
+      if (!this.$store.getters) {
+        return false;
+      }
+
+      return !!this.$store.getters.token;
+    },
   },
   async mounted() {},
   methods: {},
@@ -42,7 +54,7 @@ export default {
 }
 
 .nav-shadow {
-  box-shadow: 0 4px 20px -2px rgba(135, 135, 135, .65);
+  box-shadow: 0 4px 20px -2px rgba(135, 135, 135, 0.65);
 }
 
 pre {

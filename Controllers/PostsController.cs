@@ -37,7 +37,7 @@ namespace EasyBlog.Controllers
                     CreatedTime = p.CreatedTime,
                     AuthorName = p.Author.FullName,
                     AuthorAvatar = p.Author.Avatar,
-                    Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
+                    Tags = p.PostTags.Select(t => new TagDto { Id = t.TagId, Name = t.Tag.Name }).ToList(),
                     Source = p.Source != null ? new SourceDto { Id = p.Source.Id, Name = p.Source.Name } : new SourceDto(),
                 })
                 .AsNoTracking()
@@ -60,7 +60,7 @@ namespace EasyBlog.Controllers
                     CreatedTime = p.CreatedTime,
                     AuthorName = p.Author.FullName,
                     AuthorAvatar = p.Author.Avatar,
-                    Tags = p.Tags.Select(t => new TagDto { Id = t.Id, Name = t.Name }).ToList(),
+                    Tags = p.PostTags.Select(t => new TagDto { Id = t.TagId, Name = t.Tag.Name }).ToList(),
                     Source = p.Source != null ? new SourceDto { Id = p.Source.Id, Name = p.Source.Name } : new SourceDto(),
                 })
                 .AsNoTracking()
@@ -83,7 +83,7 @@ namespace EasyBlog.Controllers
         public async Task<IActionResult> Update(Guid id, [FromBody] PostCreateEditDto post)
         {
             var postEntity = await _context.Posts
-                .Include(p => p.Tags)
+                .Include(p => p.PostTags)
                 .FirstOrDefaultAsync(p => p.Id == id);
             var tags = _context.Tags
                 .Where(t => post.TagIds.Contains(t.Id))
@@ -92,13 +92,13 @@ namespace EasyBlog.Controllers
             postEntity.Content = post.Content;
             postEntity.Title = post.Title;
             postEntity.SourceId = post.SourceId;
-            postEntity.Tags = new List<Tag>();
+            postEntity.PostTags = new List<PostTag>();
 
             _context.Posts.Update(postEntity);
             await _context.SaveChangesAsync();
 
 
-            postEntity.Tags = tags;
+            postEntity.PostTags = tags.Select(t => new PostTag{PostId = postEntity.Id, TagId = t.Id}).ToList();
             _context.Posts.Update(postEntity);
             await _context.SaveChangesAsync();
 
@@ -120,7 +120,7 @@ namespace EasyBlog.Controllers
                 CreatedTime = DateTime.Now,
                 Content = post.Content,
                 Title = post.Title,
-                Tags = tags,
+                PostTags = tags.Select(t => new PostTag { TagId = t.Id }).ToList(),
                 AuthorId = Guid.Parse(userId ?? string.Empty),
                 SourceId = post.SourceId,
             });

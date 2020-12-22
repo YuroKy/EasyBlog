@@ -23,7 +23,7 @@
           <b-form-input v-model="user.email" placeholder="Електронна пошта" id="email"></b-form-input>
         </b-form-group>
         <b-form-group v-if="!$route.params.id" label="Пароль" label-for="password">
-          <b-form-input v-model="user.password" placeholder="Пароль" id="password"></b-form-input>
+          <b-form-input v-model="user.password" placeholder="Пароль" type="password" id="password"></b-form-input>
         </b-form-group>
       </b-col>
     </b-row>

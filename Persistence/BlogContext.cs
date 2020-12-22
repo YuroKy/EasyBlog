@@ -20,6 +20,19 @@ namespace EasyBlog.Persistence
         {
             modelBuilder.HasDefaultSchema("easy_blog");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogContext).Assembly);
+
+            modelBuilder.Entity<PostTag>()
+                .HasKey(bc => new { bc.PostId, bc.TagId });
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(bc => bc.Post)
+                .WithMany(b => b.PostTags)
+                .HasForeignKey(bc => bc.PostId);
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(bc => bc.Tag)
+                .WithMany(c => c.PostTags)
+                .HasForeignKey(bc => bc.TagId);
         }
     }
 }

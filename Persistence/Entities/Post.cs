@@ -9,7 +9,7 @@ namespace EasyBlog.Persistence.Entities
         public string Content { get; set; }
         public DateTime CreatedTime { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; } = new HashSet<Tag>();
+        public virtual ICollection<PostTag> PostTags { get; set; } = new HashSet<PostTag>();
 
 
         public Guid? SourceId { get; set; }
