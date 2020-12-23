@@ -31,9 +31,9 @@ namespace EasyBlog
 
                     context.Users.Add(new User
                     {
-                        Email = "yurii.fedelesh@gmail.com",
-                        FirstName = "Yurii",
-                        LastName = "Fedelesh",
+                        Email = "admin.fedelesh@gmail.com",
+                        FirstName = "Admin",
+                        LastName = "Admin",
                         Password = passwordHash,
                         Salt = passwordSalt,
                         Status = UserStatus.Active,
